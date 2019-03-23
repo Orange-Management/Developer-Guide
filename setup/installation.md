@@ -4,45 +4,62 @@ Installing the application as a developer can be achived by following one of the
 
 ## Server Requirements
 
-* PHP >= 7.1
+* PHP >= 7.2
 * PDO PHP Extension
-* Mbstring PHP Extension
+* mbstring
+* database such as mysql
+* apache2
+    * mod_headers
+
+### Recommended Extensions
+
+The following extensions are recommended for tests and in some cases required by the build tools
+
+* ast
+* phear
+* memcache
+* Sqlite
+* socket
+* curl
+* imap
+* bcmath
+* zip
+* php*-dev
+* dom
+* xml
+* phar
+* opcache
+* gd / gd2
 
 ## Linux Shell Script
 
-This is the prefered way to install the application since this also installs all required dev tools and sets up the direcetory structure by itself. Using this method also tears down previous installs for a fresh install perfect for re-installing from the current development version. Furthermore the use of phpUnit also makes sure that the application is working as intended. The phpUnit install also provides lots of dummy data for better integration and functionality testing of your own code/modules.
+This is the preferred way to install the application since this also installs all required dev tools and sets up the directory structure by itself. Using this method also tears down previous installs for a fresh install perfect for re-installing from the current development version. Furthermore the use of phpUnit also makes sure that the application is working as intended. The phpUnit install also provides lots of dummy data for better integration and functionality testing of your own code/modules.
 
 ### Steps
+
+The following steps will setup the application, download all necessary tools and perform extensive code quality checks and documentation tasks:
 
 1. Go somewhere where you want to install the build script
 2. Enter `git clone -b develop https://github.com/Orange-Management/Build.git`
-3. Modify `var.sh`
-4. Run `chmod 777 setup.sh`
-5. Run `./setup.sh`
-6. Modify `config.php`
-7. Run `php phpunit.phar --configuration Tests/PHPUnit/phpunit_default.xml` inside `Orange-Management` or open `http://your_url.com/Install`
+3. Modify `config.sh`
+4. Run `chmod +x buildProject.sh`
+5. Run `./buildProject.sh`
+
+Alternatively after cloning the git repository:
+
+1. Run `php composor.phar install` inside `Orange-Management`
+2. Run `php phpunit.phar --configuration tests/phpunit_no_coverage.xml` inside `Orange-Management` or open `http://your_url.com/Install`
+
+This wil only setup the application instead of also performing additional code quality checks.
 
 ### Annotation
 
-The database user and password can't be changed right now since the install config relies on the same data. Future releases will make use of a new user that will get set up by the install script as well. If you don't have `xdebug` installed but `phpdbg` you can replace `php phpunit.phar ...` with `phpdbg -qrr phpunit.phar ...`.
+During this process the database automatically gets dropped (if existing) and re-created. The database user and password can't be changed right now since the install config relies on the same data. Future releases will make use of a new user that will get set up by the install script as well. If you don't have `xdebug` installed but `phpdbg` you can replace `php phpunit.phar ...` with `phpdbg -qrr phpunit.phar ...`.
 
-## FTP Web Install
+## Git Hooks (Linux only)
 
-This only installs an application without any dev tools that may be required by other scripts in order to test your implementations.
+For developers it is recommended to copy the contents of the `default.sh` file in the `Build` repository under `Hooks` to your `pre-commit` file in the `.git/hooks` directory. If the `pre-commit` file doesn't exist just create it.
 
-### Requirements
+The same should be done with every module. Simply go to `.git/modules/**/hooks` and also add the content of the `default.sh` file to all `pre-commit` files. 
 
-1. PHP 7.0
-2. xdebug or phpdbg
-3. phpunit
-
-### Steps
-
-1. Download all Orange-Management repositories
-2. Put all repositories inside the Orange-Management repository
-3. Modify `config.php`
-4. Run `php phpunit.phar --configuration Tests/PHPUnit/phpunit_default.xml` inside `Orange-Management` or open `http://your_url.com/Install`
-
-### Annotation
-
-Re-installing the application this way requires you to drop and re-create the database.
+By doing this every commit will be inspected and either pass without warnings, pass with warnings or stop with errors. This will allow you to fix code before committing it. Be aware only changed files will be inspected. Also make sure all `pre-commit` have `+x` permissions.

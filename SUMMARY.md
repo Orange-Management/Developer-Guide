@@ -33,6 +33,23 @@
 * [DataMapper]({%}?page=datastorage/database/datamapper)
 * [Queries]({%}?page=datastorage/database/queries)
 
+## Services
+* [Filesystem]({%}?page=services/filesystem)
+* [Mail]({%}?page=services/mail)
+* [Money]({%}?page=services/money)
+* [Uri]({%}?page=services/uri)
+* [Logging]({%}?page=services/logging)
+* [Localization]({%}?page=services/localization)
+* [Events]({%}?page=services/events)
+* [Tasks]({%}?page=services/tasks)
+* [Queues]({%}?page=services/queues)
+* [Collection]({%}?page=services/collection)
+* [Validation]({%}?page=services/validation)
+* [Charting]({%}?page=services/charting)
+* [Encoding]({%}?page=services/encoding)
+* [Encryption]({%}?page=services/encryption)
+* [Codes]({%}?page=services/codes)
+
 ## Code Quality
 * [Code Quality]({%}?page=quality/code_quality)
 * [Inspections]({%}?page=quality/inspections)
@@ -40,31 +57,7 @@
 
 ## Frontend
 * [Styles and Layout]({%}?page=frontend/styles_and_layout)
-* [Charting]({%}?page=services/charting)
-* [Codes]({%}?page=services/codes)
 
 ## Components
 * [Modules]({%}?page=components/modules)
 * [Packages]({%}?page=components/packages)
-
-## Services
-### System
-* [Events]({%}?page=services/events)
-* [Filesystem]({%}?page=services/filesystem)
-* [Logging]({%}?page=services/logging)
-* [Tasks]({%}?page=services/tasks)
-
-### Messages
-* [Mail]({%}?page=services/mail)
-* [Money]({%}?page=services/money)
-* [Localization]({%}?page=services/localization)
-* [Uri]({%}?page=services/uri)
-* [Encryption]({%}?page=services/encryption)
-* [Encoding]({%}?page=services/encoding)
-
-### Stdl
-* [Queues]({%}?page=services/queues)
-* [Collection]({%}?page=services/collection)
-
-### Helper
-* [Validation]({%}?page=services/validation)

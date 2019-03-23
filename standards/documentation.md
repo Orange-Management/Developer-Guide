@@ -8,7 +8,7 @@ The php documentation is based on PhpDocumentor, therefore only valid PhpDocumen
 
 A file documentation MUST be implemented in the following form:
 
-```
+```php
 /**
  * File description
  *
@@ -16,8 +16,6 @@ A file documentation MUST be implemented in the following form:
  *
  * @category   Category name
  * @package    Package name
- * @author     Your Author 1 <your@email.com>
- * @author     Your Author 2 <your.second@email.com>
  * @copyright  Orange Management
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -29,14 +27,12 @@ A file documentation MUST be implemented in the following form:
 
 A class documentation MUST be implemented in the following form:
 
-```
+```php
 /**
  * Class description.
  *
  * @category   Category name
  * @package    Package name
- * @author     Your Author 1 <your@email.com>
- * @author     Your Author 2 <your.second@email.com>
  * @license    OMS License 1.0
  * @link       http://your.url.com
  * @since      1.0.0
@@ -47,7 +43,7 @@ A class documentation MUST be implemented in the following form:
 
 A member variable documentation MUST be implemented in the following form:
 
-```
+```php
 /**
  * Member variable description.
  *
@@ -60,7 +56,7 @@ A member variable documentation MUST be implemented in the following form:
 
 A function/method documentation MUST be implemented in the following form:
 
-```
+```php
 /**
  * Function/method description.
  *
@@ -72,7 +68,6 @@ A function/method documentation MUST be implemented in the following form:
  * @return return_type
  *
  * @since  1.0.0
- * @author Your Author 2 <your.second@email.com>
  */
 ```
 
@@ -82,7 +77,7 @@ Variable documentation is not mandatory and can be omitted. However it's recomme
 
 Example:
 
-```
+```php
 /** @var TestObject[] $myArray */
 ```
 
@@ -92,35 +87,62 @@ The javascript documentation is based on JsDoc, therefore only valid JsDoc comme
 
 ### File
 
+```js
+/**
+ * File description
+ *
+ * @category   Category name
+ * @package    Package name
+ * @copyright  Orange Management
+ * @license    OMS License 1.0
+ * @version    1.0.0
+ * @link       http://your.url.com
+ */
+```
+
 ### Class
+
+A class documentation MUST be implemented in the following form:
+
+```js
+/**
+ * Class description.
+ *
+ * @category   Category name
+ * @package    Package name
+ * @license    OMS License 1.0
+ * @link       http://your.url.com
+ * @since      1.0.0
+ */
+```
 
 #### Member
 
 #### Function/Method
 
-### Variable
+A function/method documentation MUST be implemented in the following form:
 
-## Scss
-
-The scss documentation is based on SassDoc, therefore only valid SassDoc comments are valid for all scss files.
-
-### File
-
-```
-////
-// Documentation
-// 
-// Optional example or more detailed description.
-// 
-// @since  1.0.0
-// @author Your Author 2 <your.second@email.com>
-////
+```js
+/**
+ * Function/method description.
+ *
+ * Optional example or more detailed description.
+ *
+ * @param {variable_type_1} param1Name     Parameter description
+ * @param {variable_type}   [optionalPara] Parameter description
+ *
+ * @return {return_type}
+ *
+ * @since  1.0.0
+ */
 ```
 
-### Class
-
-#### Member
-
-#### Function/Method
+Please also note the correct alignment of `@param` type, name and description
 
 ### Variable
+
+In some cases it may be required to type hint a variable in this case the following format MUST be used.
+
+```php
+/** @var variable_type varName {optional_description}
+```

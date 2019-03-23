@@ -2,28 +2,28 @@
 
 ## CSRF
 
-The tool to protect clients from CSRF is a randomly generated CSRF token, that can be used inside the URI generator. It's highly recomended to make use of this token whenever possible to reduce the risk of CSRF attacks.
+The tool to protect clients from CSRF is a randomly generated CSRF token, that can be used inside the URI generator. It's highly recommended to make use of this token whenever possible to reduce the risk of CSRF attacks.
 
 Example usage:
 
-```
-<form action="<?= UriFactory::build('/{/lang}/api/path?csrf={$CSRF}')" ...>
+```html
+<form action="<?= UriFactory::build('{/api}path?csrf={$CSRF}')" ...>
     ...
 </form>
 ```
 
-Now the application will receive the automatically generated CSRF token as query parameter for further use. If the CSRF token is not the same as the one assoziated with the client on the server side the client will receive a 403 HTTP response. The CSRF however doesn't have be specified, if that's the case **every module itself must make sure wheter a valid CSRF token is required** or not. The reason for this is that third party requests are a possibility as well, and sharing the private CSRF token would render it useless.
+Now the application will receive the automatically generated CSRF token as query parameter for further use. If the CSRF token is not the same as the one associated with the client on the server side the client will receive a 403 HTTP response. The CSRF however doesn't have be specified, if that's the case **every module itself must make sure whether a valid CSRF token is required** or not. The reason for this is that third party requests are a possibility as well, and sharing the private CSRF token would render it useless.
 
 Since the validation of the CSRF token is performed automatically it is only necessary to check the existence, since if it exists it has to be valid.
 
 Example usage in a module handling a API request:
 
-```
+```php
 if($request->getData('CSRF') === null) {
     $response->setStatusCode(RequestStatus::R_403);
 
     /* optional */
-    $response->set($request->__toString(), new Notify('Unknown referrer!', NotifyType::INFO));
+    $response->set($request->getUri()->__toString(), new Notify('Unknown referrer!', NotifyType::INFO));
 
     return;
 }
@@ -55,13 +55,13 @@ Scripts and frames must be provided by the own server or google. This is importa
 
 The default CSP looks like the following:
 
-```
+```php
 $response->getHeader()->set('content-security-policy', 'script-src \'self\'; frame-src \'self\'', true);
 ```
 
 In order to whitelist inline javascript you can use the following logic. This however requires you to know the inline script beforehand `$script`. After setting the CSP header they automatically get locked so that further changes are not possible. This is a security measure in order to prevent any malicious adjustments.
 
-```
+```php
 $response->getHeader()->set('content-security-policy', 'script-src \'self\' \'sha256-' . base64_encode(hash('sha256', $script, true)) . '\'; frame-src \'self\'', true);
 ```
 
@@ -69,7 +69,7 @@ $response->getHeader()->set('content-security-policy', 'script-src \'self\' \'sh
 
 This header tells the client browser to use local xss protection if available.
 
-```
+```php
 $response->getHeader()->set('x-xss-protection', '1; mode=block');
 ```
 
@@ -77,7 +77,7 @@ $response->getHeader()->set('x-xss-protection', '1; mode=block');
 
 By using this header browsers which support this feature will ignore the content/mime and recognize the file by the provided header only.
 
-```
+```php
 $response->getHeader()->set('x-content-type-options', 'nosniff');
 ```
 
@@ -85,13 +85,13 @@ $response->getHeader()->set('x-content-type-options', 'nosniff');
 
 The x-frame-options is providing the same protection for frames as the content-security-policy header. Please only use this header in addition to the content-security-policy if you have to but make sure the rules don't contradict with the content-security-policy.
 
-```
+```php
 $response->getHeader()->set('x-frame-options', 'SAMEORIGIN');
 ```
 
 ## Super globals
 
-Super globals are not available througout the application and the values can only be accesed through middleware classes like:
+Super globals are not available throughout the application and the values can only be accessed through middleware classes like:
 
 * SessionManager
 * CookieJar
@@ -122,18 +122,8 @@ These are just a few examples but it is very important to make sure, that these 
 
 Example usage:
 
-```
-if(($pathNew = realpath($path)) === false || strpos($pathNew, self::MODULE_PATH) === false) {
+```php
+if(($pathNew = realpath($path)) === false) {
     throw new PathException($path);
 }
 ```
-
-The example throws an exception if the path either doesn't exist or is trying to access a path that doesn't contain the path defined in `self::MODULE_PATH`. Another validation could be:
-
-```
-if(($pathNew = realpath($path)) === false || !StringUtils::startsWith($pathNew, ROOT_PATH)) {
-    throw new PathException($path);
-}
-```
-
-This example now is not only checking if the path exists and if it contains a path element, it also makes sure that the path is inside the application root path. You could as easily replace `ROOT_PATH` with `self::MODULE_PATH` and this validation would make sure `$path` only directs within a module.

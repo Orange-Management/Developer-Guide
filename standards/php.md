@@ -1,6 +1,6 @@
 # Php
 
-The php code needs to be php 7 compliant. No php 7 deprecated or removed elements, functions or practices are allowed (e.g. short open tag).
+The php code needs to be php 7 compliant. No php 7 deprecated or removed elements, functions or practices are allowed (e.g. short open tag). Please use the `phpcs.xml` and `phpmd.xml` configurations for PHP Code Sniffer and PHP Mess Detector provided with the project to identify most of the basic code standards.
 
 ##  Php Tags
 
@@ -10,13 +10,13 @@ PHP code MUST use the long `<?php ?>` tags or the short-echo `<?= ?>` tags; it M
 
 PHP code MUST use only UTF-8 without BOM
 
-## Side Effects
+## Line Ending
 
-A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both.
+Lines MUST end with `\n` (LF) and MUST NOT have a whitespace at the end.
 
-The phrase "side effects" means execution of logic not directly related to declaring classes, functions, constants, etc., merely from including the file.
+## File Ending
 
-"Side effects" include but are not limited to: generating output, explicit use of require or include, connecting to external services, modifying ini settings, emitting errors or exceptions, modifying global or static variables, reading from or writing to a file, and so on.
+Files must end with a new line element `\n`.
 
 ## Namespace and Class Names
 
@@ -26,22 +26,40 @@ This means each class is in a file by itself, and is in a namespace of at least 
 
 Class names MUST be declared in StudlyCaps.
 
-## Constants
-
-Class constants MUST be declared in all upper case with underscore separators.
-
-## Methods
-
-Method names MUST be declared in camelCase().
-
 ## Php in html
 
 Php code embedded into template files SHOULD use the alternative syntax for control structures in order to improve the readability:
 
-```
-if($a === 5) : ?>
+```php
+<?php if ($a === 5) : ?>
     <p>This is html</p>
 <?php endif; ?>
+```
+
+## Echo
+
+when echoing multiple components, don't concat them but use `,`.
+
+```php
+echo 'Hello' , 'World';
+```
+
+## If
+
+#### Elseif
+
+Use `elseif` where possible instead of `else if`.
+
+## Namespace
+
+Namespaces must be surrounded with new line elements.
+
+## Class Constants
+
+Class constants MUST have a access modifier
+
+```php
+public CONST_NAME = ...;
 ```
 
 ## Deprecated functions and variables
